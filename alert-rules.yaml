@@ -1,0 +1,22 @@
+groups:
+  - name: MongoDB
+    rules:
+      - alert: MongoDBQuery
+        expr: rate(mongodb_op_counters_total{type="query"}[1m]) > 1
+        for: 10s
+        labels:
+          team: MongoDB
+        annotations:
+          summary: Excesso de Consultas 
+          description: O numero de operações do tipo {{$labels.type}} no MongoDB {{$labels.instance}} esta alto.
+
+  - name: ""
+    rules:
+      - alert: ""
+        expr: rate(http_requests_received_total[1m]) > 1
+        for: 30s
+        labels:
+          team: ""
+        annotations:
+          summary: Taxa de Transferencia muito alta {{$labels.instance}} 
+          description: "{{$labels.instance}} Esta com uma taxa de transferencia altissima (valor: {{$value}})"

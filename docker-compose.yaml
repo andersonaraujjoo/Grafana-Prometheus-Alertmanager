@@ -1,0 +1,55 @@
+version: '3.4'
+services:
+  mongodb:
+    image: mongo:4.2.8
+    networks:
+      - lab_network
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: mongouser
+      MONGO_INITDB_ROOT_PASSWORD: mongopwd
+  mongodbexporter:
+    image: ""
+    ports:
+      - "9216:9216"
+    depends_on:
+      - mongodb
+    networks:
+      - lab_network
+    environment:
+      MONGODB_URI: "mongodb://mongouser:mongopwd@mongodb:27017"    
+  prometheus:
+    image: prom/prometheus:v2.44.0
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml
+      - ./alert-rules.yaml:/etc/prometheus/alert-rules.rules  
+    depends_on:
+      - pedelogo.catalogo.api
+      - mongodbexporter
+    networks:
+      - lab_network
+  grafana:
+    image: grafana/grafana:7.3.3
+    ports:
+      - "3000:3000"
+    depends_on:
+      - prometheus
+    networks: 
+      - lab_network
+  alertmanager:
+    image: prom/alertmanager:v0.25.0
+    volumes:
+      - ./alert-manager.yaml:/prometheus/alertmanager.yml
+    command:
+      - '--config.file=/prometheus/alertmanager.yml'
+    ports:
+      - 9093:9093
+    depends_on:
+      - prometheus  
+    networks:
+      - lab_network 
+
+networks:
+  lab_network:
+    driver: bridge
