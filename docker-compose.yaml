@@ -1,5 +1,6 @@
 version: '3.4'
 services:
+  #mongodb
   mongodb:
     image: mongo:4.2.8
     networks:
@@ -7,6 +8,8 @@ services:
     environment:
       MONGO_INITDB_ROOT_USERNAME: mongouser
       MONGO_INITDB_ROOT_PASSWORD: mongopwd
+  
+  #mongodbexporter
   mongodbexporter:
     image: ""
     ports:
@@ -17,6 +20,8 @@ services:
       - lab_network
     environment:
       MONGODB_URI: "mongodb://mongouser:mongopwd@mongodb:27017"    
+  
+  #prometheus
   prometheus:
     image: prom/prometheus:v2.44.0
     ports:
@@ -29,6 +34,8 @@ services:
       - mongodbexporter
     networks:
       - lab_network
+  
+  #grafana
   grafana:
     image: grafana/grafana:7.3.3
     ports:
@@ -42,6 +49,8 @@ services:
       - prometheus
     networks: 
       - lab_network
+  
+  #alertmanager
   alertmanager:
     image: prom/alertmanager:v0.25.0
     volumes:
