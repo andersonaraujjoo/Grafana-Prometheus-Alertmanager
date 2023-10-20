@@ -4,7 +4,7 @@
 <p align="center">O arquivo alertrules.yaml contém as regras de alerta que o Prometheus deve avaliar.</p>
 <p align="center">O arquivo alertmanager.yaml é responsável por configurar o Alertmanager, um componente do Prometheus que gerencia os alertas enviados pelo Prometheus e envia a endpoints de notificação (ex:telegram, slack, webhook.)</p>
 
-Dependências
+<p align="center">Dependências</p>
 
-[GIT]
-[DOCKER]
+<p align="center">[GIT]</p>
+<p align="center">[DOCKER]</p>
