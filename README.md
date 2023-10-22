@@ -8,8 +8,8 @@
 
 <p align="center">[GIT]</p>
 <p align="center">[DOCKER]</p>
-<p align="center">
 ```
+ <p align="center">
  https://github.com/andersonaraujjoo/Grafana-Prometheus-Alertmanager.git
+</p> 
 ```
-</p>
